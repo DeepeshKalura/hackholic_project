@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../controller/app/home_controller.dart';
 import '../../model/user_model.dart';
 import 'profile_avatar.dart';
 import 'responsive.dart';
@@ -15,6 +19,9 @@ class CreatePostContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = Responsive.isDesktop(context);
+
+    final homeProvider = Provider.of<HomeController>(context);
+
     return Card(
       margin: EdgeInsets.symmetric(horizontal: isDesktop ? 5.0 : 0.0),
       elevation: isDesktop ? 1.0 : 0.0,
@@ -46,16 +53,24 @@ class CreatePostContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton.icon(
-                    onPressed: () => print('Live'),
+                    onPressed: () {
+                      // TODO: Take a Camera Photo From Here and
+
+                      homeProvider.getImageFromUser(true);
+                      developer.log("camera");
+                    },
                     icon: const Icon(
-                      Icons.videocam,
+                      Icons.video_camera_back,
                       color: Colors.red,
                     ),
-                    label: const Text('Live'),
+                    label: const Text('Camera'),
                   ),
                   const VerticalDivider(width: 8.0),
                   TextButton.icon(
-                    onPressed: () => print('Photo'),
+                    onPressed: () {
+                      homeProvider.getImageFromUser(false);
+                      developer.log('Photo');
+                    },
                     icon: const Icon(
                       Icons.photo_library,
                       color: Colors.green,
@@ -64,12 +79,12 @@ class CreatePostContainer extends StatelessWidget {
                   ),
                   const VerticalDivider(width: 8.0),
                   TextButton.icon(
-                    onPressed: () => print('Room'),
+                    onPressed: () => print('Game'),
                     icon: const Icon(
                       Icons.video_call,
                       color: Colors.purpleAccent,
                     ),
-                    label: const Text('Room'),
+                    label: const Text('Game'),
                   ),
                 ],
               ),

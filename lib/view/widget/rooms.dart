@@ -63,9 +63,9 @@ class _CreateRoomButton extends StatelessWidget {
           size: 35.0,
           color: Colors.purple,
         ),
-        label: const Text('Create\nRoom',
+        label: const Text('Play\nGame',
             style: TextStyle(color: Palette.facebookBlue)),
-        onPressed: () => print('Create Room'),
+        onPressed: () => print('Play Game'),
         style: ButtonStyle(
           foregroundColor: MaterialStateProperty.all(Colors.white),
           shape: MaterialStateProperty.all(

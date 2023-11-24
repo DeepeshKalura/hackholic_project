@@ -1,7 +1,7 @@
 # Winning the hackathon is my goal 
 
 Problem Statement 
-1) Social Networking site - a website similar to Facebook where you can search people, add friends, upload photos/videos and post something on the wall.
+1 Social Networking site - a website similar to Facebook where you can search people, add friends, upload photos/videos and post something on the wall.
 
 Todo :
 1. Search People 

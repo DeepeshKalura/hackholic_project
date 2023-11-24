@@ -7,10 +7,15 @@ import '../../model/models.dart';
 import '../api/current_user_api_controller.dart';
 import '../firebase/post_firebase_controller.dart';
 import '../firebase/upload_firebase_controller.dart';
+import '../local/upload_data_from_device_local_controller.dart';
 
 class HomeController extends ChangeNotifier {
   final _uploadFirebaseController = UploadFirebaseController();
   final _postFirebaseController = PostFirebaseController();
+  final _uploadDataFromDeviceLocalController =
+      UploadDataFromDeviceLocalController();
+
+  Uint8List? data;
 
   final Uuid _uuid = const Uuid();
   UserModel currentUser = UserModel(
@@ -48,5 +53,14 @@ class HomeController extends ChangeNotifier {
     );
 
     _postFirebaseController.addPost(post: newPost, uid: postId);
+  }
+
+  Future<void> getImageFromUser(bool camera) async {
+    if (camera) {
+      data = await _uploadDataFromDeviceLocalController.getImageFromCamera();
+    } else {
+      data = await _uploadDataFromDeviceLocalController.getImageFromGallery();
+    }
+    notifyListeners();
   }
 }
