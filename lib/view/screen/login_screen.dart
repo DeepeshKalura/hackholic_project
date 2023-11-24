@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/app/login_screen_controller.dart';
 import '/view/theme/app_theme.dart';
 import '../../controller/routes/routes_name.dart';
 
@@ -16,28 +18,34 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final FocusNode _focusNodePassword = FocusNode();
-  final TextEditingController _controllerUsername = TextEditingController();
+
+  final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
 
   bool _obscurePassword = true;
 
   @override
   void dispose() {
-    _controllerUsername.dispose();
+    _controllerEmail.dispose();
     _controllerPassword.dispose();
     super.dispose();
   }
 
-  void _navigateToHomeScreen() {
-    Navigator.pushNamed(context, RoutesName.homeScreen);
-  }
+  // void _navigateToHomeScreen() {
+  //   Navigator.pushNamed(context, RoutesName.homeScreen);
+  // }
 
   void _navigateToRegisterScreen() {
-    Navigator.pushNamed(context, RoutesName.registerScreen);
+    Navigator.pushNamed(
+      context,
+      RoutesName.registerScreen,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final loginProvider = Provider.of<LoginScreenController>(context);
+
     return Scaffold(
       backgroundColor: Palette.scaffold,
       body: Center(
@@ -76,7 +84,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 60),
                     TextFormField(
-                      controller: _controllerUsername,
+                      controller: _controllerEmail,
                       keyboardType: TextInputType.name,
                       decoration: InputDecoration(
                         labelText: "Username",
@@ -139,7 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           onPressed: () {
-                            _navigateToHomeScreen();
+                            loginProvider.signIn(_controllerEmail.text,
+                                _controllerPassword.text);
                           },
                           child: const Text("Login"),
                         ),
