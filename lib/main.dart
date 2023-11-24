@@ -1,11 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'controller/app/dummy_controller.dart';
 import 'controller/routes/routes.dart';
 import 'controller/routes/routes_name.dart';
-import 'view/theme/app_theme.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -15,11 +21,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: const [],
-      child: MaterialApp(
+      providers: [
+        ChangeNotifierProvider<DummyController>(
+          create: (_) => DummyController(),
+        ),
+      ],
+      child: const MaterialApp(
         title: 'HackaHolic Project',
         debugShowCheckedModeBanner: false,
-        theme: AppTheme(context).lightTheme(),
         themeMode: ThemeMode.system,
         initialRoute: RoutesName.homeScreen,
         onGenerateRoute: Routes.onGenerating,

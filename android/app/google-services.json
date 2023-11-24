@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "28250213611",
+    "project_id": "hackaholic-a793a",
+    "storage_bucket": "hackaholic-a793a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:28250213611:android:cc44dfe2b45c7bbace02ae",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHD09Bni5Nv2MGtu8zjOnZX0P64G6xFLY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
