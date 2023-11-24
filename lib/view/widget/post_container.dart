@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:project/model/post_model.dart';
@@ -222,7 +223,11 @@ class _PostStatsState extends State<_PostStats> {
                 size: 25.0,
               ),
               label: 'Share',
-              onTap: () => print('Share'),
+              onTap: () {
+                Share.share(
+                  '${widget.post.imageUrl}' '${widget.post.caption}',
+                );
+              },
             )
           ],
         ),
