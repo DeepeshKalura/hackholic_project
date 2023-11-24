@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'controller/app/dummy_controller.dart';
+import 'controller/app/login_screen_controller.dart';
+import 'controller/app/register_screen_controller.dart';
+import 'controller/routes/routes.dart';
 import 'firebase_options.dart';
 import 'view/screen/home_screen.dart';
 import 'view/screen/login_screen.dart';
@@ -33,11 +36,16 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider<DummyController>(
           create: (_) => DummyController(),
         ),
+        ChangeNotifierProvider<LoginScreenController>(
+          create: (_) => LoginScreenController(),
+        ),
+        ChangeNotifierProvider(create: (_) => RegisterScreenController()),
       ],
       child: MaterialApp(
         title: 'HackaHolic Project',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
+        onGenerateRoute: Routes.onGenerating,
         home: StreamBuilder(
           stream: _instance.authStateChanges(),
           builder: (context, snapshot) {
