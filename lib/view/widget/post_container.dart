@@ -214,7 +214,9 @@ class _PostStatsState extends State<_PostStats> {
                 size: 20.0,
               ),
               label: 'Comment',
-              onTap: () => print('Comment'),
+              onTap: () {
+                print('Comment');
+              },
             ),
             _PostButton(
               icon: Icon(

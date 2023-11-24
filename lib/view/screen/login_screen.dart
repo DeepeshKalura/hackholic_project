@@ -24,6 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _obscurePassword = true;
 
+  bool isLoading = false;
+
   @override
   void dispose() {
     _controllerEmail.dispose();
@@ -146,9 +148,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            loginProvider.signIn(_controllerEmail.text,
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+
+                            await loginProvider.signIn(_controllerEmail.text,
                                 _controllerPassword.text);
+
+                            setState(() {
+                              isLoading = false;
+                            });
                           },
                           child: const Text("Login"),
                         ),
