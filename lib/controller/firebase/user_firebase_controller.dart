@@ -30,4 +30,12 @@ class AddingUserFirebaseController {
       developer.log(e.message.toString());
     }
   }
+
+  Future<void> getUser(String uid) async {
+    try {
+      await _firebaseFirestore.collection('users').doc(uid).get();
+    } on FirebaseException catch (e) {
+      developer.log(e.message.toString());
+    }
+  }
 }
