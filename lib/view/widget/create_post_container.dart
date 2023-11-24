@@ -103,10 +103,7 @@ class _CreatePostContainerState extends State<CreatePostContainer> {
                           }
                         },
                         icon: Icons.send,
-                        iconSize: 26,
-                      ),
-                      const SizedBox(
-                        width: 10.0,
+                        iconSize: 25,
                       ),
                     ],
                   ),

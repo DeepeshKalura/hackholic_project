@@ -105,7 +105,7 @@ class _HomeScreenMobile extends StatelessWidget {
         );
       } else {
         return const Text(
-          'facebook',
+          'NinjaHub',
           style: TextStyle(
             color: Palette.facebookBlue,
             fontSize: 28.0,
