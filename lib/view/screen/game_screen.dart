@@ -29,8 +29,8 @@ class _GameScreenState extends State<GameScreen> {
   Timer? timer;
 
   static var customFontWhite = GoogleFonts.coiny(
-    textStyle: const TextStyle(
-      color: Colors.white,
+    textStyle: TextStyle(
+      color: MainColor.accentColor,
       letterSpacing: 3,
       fontSize: 28,
     ),
@@ -58,15 +58,25 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Tic Tac Toe',
+          style: TextStyle(
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: Colors.black),
+      ),
       backgroundColor: MainColor.primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Expanded(
-              flex: 1,
-              child: Container(
-                  child: Row(
+            Container(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
@@ -97,10 +107,12 @@ class _GameScreenState extends State<GameScreen> {
                     ],
                   ),
                 ],
-              )),
+              ),
             ),
-            Expanded(
-              flex: 3,
+            const SizedBox(height: 25),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.6,
+              width: double.infinity,
               child: GridView.builder(
                   itemCount: 9,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -129,8 +141,8 @@ class _GameScreenState extends State<GameScreen> {
                                 textStyle: TextStyle(
                               fontSize: 64,
                               color: matchedIndexes.contains(index)
-                                  ? MainColor.secondaryColor
-                                  : MainColor.primaryColor,
+                                  ? MainColor.primaryColor
+                                  : MainColor.accentColor,
                             )),
                           ),
                         ),
@@ -138,17 +150,15 @@ class _GameScreenState extends State<GameScreen> {
                     );
                   }),
             ),
-            Expanded(
-              flex: 2,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(resultDeclaration, style: customFontWhite),
-                    const SizedBox(height: 10),
-                    _buildTimer()
-                  ],
-                ),
+            const SizedBox(height: 25),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(resultDeclaration, style: customFontWhite),
+                  const SizedBox(height: 10),
+                  _buildTimer()
+                ],
               ),
             ),
           ],
