@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../model/models.dart';
 import '../api/current_user_api_controller.dart';
+import '../api/random_url_image_controller.dart';
 import '../firebase/post_firebase_controller.dart';
 import '../firebase/upload_firebase_controller.dart';
 import '../local/upload_data_from_device_local_controller.dart';
@@ -14,6 +15,8 @@ class HomeController extends ChangeNotifier {
   final _postFirebaseController = PostFirebaseController();
   final _uploadDataFromDeviceLocalController =
       UploadDataFromDeviceLocalController();
+
+  final _randomUrlImageController = RandomUrlImageController();
 
   Uint8List? data;
 
@@ -58,9 +61,14 @@ class HomeController extends ChangeNotifier {
   Future<void> getImageFromUser(bool camera) async {
     if (camera) {
       data = await _uploadDataFromDeviceLocalController.getImageFromCamera();
+      notifyListeners();
     } else {
       data = await _uploadDataFromDeviceLocalController.getImageFromGallery();
+      notifyListeners();
     }
-    notifyListeners();
+  }
+
+  String randomPost() {
+    return _randomUrlImageController.randomPost();
   }
 }

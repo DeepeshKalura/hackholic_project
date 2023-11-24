@@ -3,13 +3,14 @@ import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/view/widget/circle.dart';
 import '../../controller/app/home_controller.dart';
 import '../../controller/routes/routes_name.dart';
 import '../../model/user_model.dart';
 import 'profile_avatar.dart';
 import 'responsive.dart';
 
-class CreatePostContainer extends StatelessWidget {
+class CreatePostContainer extends StatefulWidget {
   final UserModel currentUser;
 
   const CreatePostContainer({
@@ -17,6 +18,12 @@ class CreatePostContainer extends StatelessWidget {
     required this.currentUser,
   }) : super(key: key);
 
+  @override
+  State<CreatePostContainer> createState() => _CreatePostContainerState();
+}
+
+class _CreatePostContainerState extends State<CreatePostContainer> {
+  final TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = Responsive.isDesktop(context);
@@ -36,18 +43,66 @@ class CreatePostContainer extends StatelessWidget {
           children: [
             Row(
               children: [
-                ProfileAvatar(imageUrl: currentUser.imageUrl),
+                ProfileAvatar(imageUrl: widget.currentUser.imageUrl),
                 const SizedBox(width: 8.0),
-                const Expanded(
+                Expanded(
                   child: TextField(
-                    decoration: InputDecoration.collapsed(
+                    controller: _textEditingController,
+                    decoration: const InputDecoration.collapsed(
                       hintText: 'What\'s on your mind?',
                     ),
                   ),
-                )
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                CircleButton(
+                  onPressed: () async {
+                    // upload post and give
+                    if (_textEditingController.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Please Enter Some Text'),
+                        ),
+                      );
+                    } else {
+                      await homeProvider.uploadPost(
+                        'posts/images/${homeProvider.currentUser.uid}/${DateTime.now().microsecondsSinceEpoch}.png',
+                        '${DateTime.now().microsecondsSinceEpoch}.png',
+                        homeProvider.data!,
+                        _textEditingController.text,
+                      );
+
+                      // toast for success
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Post Uploaded Successfully'),
+                        ),
+                      );
+
+                      homeProvider.data = null;
+
+                      _textEditingController.clear();
+                    }
+                  },
+                  icon: Icons.send,
+                  iconSize: 26,
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
               ],
             ),
             const Divider(height: 10.0, thickness: 0.5),
+            if (homeProvider.data != null)
+              Center(
+                child: SizedBox(
+                  child: Image.memory(
+                    homeProvider.data!,
+                  ),
+                ),
+              ),
             SizedBox(
               height: 40.0,
               child: Row(

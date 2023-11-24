@@ -20,11 +20,13 @@ class CircleButton extends StatelessWidget {
         color: Colors.grey[200],
         shape: BoxShape.circle,
       ),
-      child: IconButton(
-        icon: Icon(icon),
-        iconSize: iconSize,
-        color: Colors.black,
-        onPressed: onPressed,
+      child: Center(
+        child: IconButton(
+          icon: Icon(icon),
+          iconSize: iconSize,
+          color: Colors.black,
+          onPressed: onPressed,
+        ),
       ),
     );
   }
