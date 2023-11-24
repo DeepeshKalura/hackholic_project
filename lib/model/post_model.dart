@@ -11,7 +11,7 @@ class PostModel {
   final int shares;
   final String imageUrl;
   final String caption;
-  final String description;
+
   PostModel({
     required this.user,
     required this.postId,
@@ -21,7 +21,6 @@ class PostModel {
     required this.shares,
     required this.imageUrl,
     required this.caption,
-    required this.description,
   });
 
   PostModel copyWith({
@@ -33,7 +32,6 @@ class PostModel {
     int? shares,
     String? imageUrl,
     String? caption,
-    String? description,
   }) {
     return PostModel(
       user: user ?? this.user,
@@ -44,7 +42,6 @@ class PostModel {
       shares: shares ?? this.shares,
       imageUrl: imageUrl ?? this.imageUrl,
       caption: caption ?? this.caption,
-      description: description ?? this.description,
     );
   }
 
@@ -58,7 +55,6 @@ class PostModel {
       'shares': shares,
       'imageUrl': imageUrl,
       'caption': caption,
-      'description': description,
     };
   }
 
@@ -72,7 +68,6 @@ class PostModel {
       shares: map['shares'] as int,
       imageUrl: map['imageUrl'] as String,
       caption: map['caption'] as String,
-      description: map['description'] as String,
     );
   }
 
@@ -83,7 +78,7 @@ class PostModel {
 
   @override
   String toString() {
-    return 'Post(user: $user, postId: $postId, timeAgo: $timeAgo, likes: $likes, comments: $comments, shares: $shares, imageUrl: $imageUrl, caption: $caption, description: $description)';
+    return 'Post(user: $user, postId: $postId, timeAgo: $timeAgo, likes: $likes, comments: $comments, shares: $shares, imageUrl: $imageUrl, caption: $caption,)';
   }
 
   @override
@@ -97,8 +92,7 @@ class PostModel {
         other.comments == comments &&
         other.shares == shares &&
         other.imageUrl == imageUrl &&
-        other.caption == caption &&
-        other.description == description;
+        other.caption == caption;
   }
 
   @override
@@ -110,7 +104,6 @@ class PostModel {
         comments.hashCode ^
         shares.hashCode ^
         imageUrl.hashCode ^
-        caption.hashCode ^
-        description.hashCode;
+        caption.hashCode;
   }
 }

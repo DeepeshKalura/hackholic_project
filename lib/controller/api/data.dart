@@ -69,7 +69,6 @@ final List<PostModel> posts = [
     likes: 1202,
     comments: 184,
     shares: 96,
-    description: "Blah! Blah! Blah!",
     postId: "1",
   ),
   PostModel(
@@ -81,7 +80,6 @@ final List<PostModel> posts = [
     likes: 683,
     comments: 79,
     shares: 18,
-    description: "Blah! Blah! Blah!",
     postId: "2",
   ),
   PostModel(
@@ -93,7 +91,6 @@ final List<PostModel> posts = [
     likes: 894,
     comments: 201,
     shares: 27,
-    description: "Blah! Blah! Blah!",
     postId: "3",
   ),
   PostModel(
@@ -105,7 +102,6 @@ final List<PostModel> posts = [
     likes: 722,
     comments: 183,
     shares: 42,
-    description: "Blah! Blah! Blah!",
     postId: "4",
   ),
   PostModel(
@@ -118,7 +114,6 @@ final List<PostModel> posts = [
     likes: 482,
     comments: 37,
     shares: 9,
-    description: "Blah! Blah! Blah!",
     postId: "5",
   ),
   PostModel(
@@ -130,7 +125,6 @@ final List<PostModel> posts = [
     likes: 1523,
     shares: 129,
     comments: 301,
-    description: "Blah! Blah! Blah!",
     postId: "6",
   )
 ];
