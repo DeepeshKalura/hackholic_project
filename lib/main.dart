@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         title: 'HackaHolic Project',
         debugShowCheckedModeBanner: false,
         themeMode: ThemeMode.system,
-        initialRoute: RoutesName.homeScreen,
+        initialRoute: RoutesName.loginScreen,
         onGenerateRoute: Routes.onGenerating,
       ),
     );
