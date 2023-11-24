@@ -64,7 +64,7 @@ class PostContainer extends StatelessWidget {
   }
 }
 
-class _PostHeader extends StatelessWidget {
+class _PostHeader extends StatefulWidget {
   final PostModel post;
 
   const _PostHeader({
@@ -73,17 +73,30 @@ class _PostHeader extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<_PostHeader> createState() => _PostHeaderState();
+}
+
+class _PostHeaderState extends State<_PostHeader> {
+  var likable = true;
+
+  void isLikable() {
+    setState(() {
+      likable = !likable;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ProfileAvatar(imageUrl: post.user.imageUrl),
+        ProfileAvatar(imageUrl: widget.post.user.imageUrl),
         const SizedBox(width: 8.0),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                post.user.name,
+                widget.post.user.name,
                 style: const TextStyle(
                   fontWeight: FontWeight.w600,
                 ),
@@ -91,7 +104,7 @@ class _PostHeader extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    '${post.timeAgo} • ',
+                    '${widget.post.timeAgo} • ',
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 12.0,
@@ -116,7 +129,7 @@ class _PostHeader extends StatelessWidget {
   }
 }
 
-class _PostStats extends StatelessWidget {
+class _PostStats extends StatefulWidget {
   final PostModel post;
 
   const _PostStats({
@@ -125,41 +138,53 @@ class _PostStats extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<_PostStats> createState() => _PostStatsState();
+}
+
+class _PostStatsState extends State<_PostStats> {
+  var likable = false;
+
+  void isLikable() {
+    setState(() {
+      likable = !likable;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(4.0),
-              decoration: const BoxDecoration(
-                color: Palette.facebookBlue,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.thumb_up,
-                size: 10.0,
-                color: Colors.white,
-              ),
-            ),
+                padding: const EdgeInsets.all(4.0),
+                decoration: const BoxDecoration(
+                  color: Palette.facebookBlue,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.thumb_up,
+                  size: 10.0,
+                  color: Colors.white,
+                )),
             const SizedBox(width: 4.0),
             Expanded(
               child: Text(
-                '${post.likes}',
+                '${widget.post.likes + (likable ? 1 : 0)}',
                 style: TextStyle(
                   color: Colors.grey[600],
                 ),
               ),
             ),
             Text(
-              '${post.comments} Comments',
+              '${widget.post.comments} Comments',
               style: TextStyle(
                 color: Colors.grey[600],
               ),
             ),
             const SizedBox(width: 8.0),
             Text(
-              '${post.shares} Shares',
+              '${widget.post.shares} Shares',
               style: TextStyle(
                 color: Colors.grey[600],
               ),
@@ -172,11 +197,14 @@ class _PostStats extends StatelessWidget {
             _PostButton(
               icon: Icon(
                 MdiIcons.thumbUpOutline,
-                color: Colors.grey[600],
+                color: likable ? Palette.facebookBlue : Colors.grey[600],
                 size: 20.0,
               ),
               label: 'Like',
-              onTap: () => print('Like'),
+              onTap: () {
+                isLikable();
+                print('Like');
+              },
             ),
             _PostButton(
               icon: Icon(
