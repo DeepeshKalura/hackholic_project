@@ -10,12 +10,13 @@ class RegisterScreenController extends ChangeNotifier {
   final AddingUserFirebaseController _addingUserFirebaseController =
       AddingUserFirebaseController();
 
-  Future<String> signUp(String email, String password, String userName) async {
-    await _addingUserFirebaseController.addUser(
+  Future<void> signUp(String email, String password, String userName) async {
+    var result = await _authFirebaseController.signUp(email, password);
+    return await _addingUserFirebaseController.addUser(
       userName: userName,
       email: email,
+      uid: result,
     );
-    return await _authFirebaseController.signUp(email, password);
   }
 
   Future<String> signIn(String email, String password) async {
