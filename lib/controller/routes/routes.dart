@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../view/screen/game_screen.dart';
 import '../../view/screen/home_screen.dart';
 import '../../view/screen/login_screen.dart';
 import '../../view/screen/register_screen.dart';
@@ -21,6 +22,10 @@ class Routes {
       case 'registerScreen':
         return MaterialPageRoute(
           builder: (_) => const RegisterScreen(),
+        );
+      case 'gameScreen':
+        return MaterialPageRoute(
+          builder: (_) => const GameScreen(),
         );
       default:
         return MaterialPageRoute(

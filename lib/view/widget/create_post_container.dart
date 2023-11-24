@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../controller/app/home_controller.dart';
+import '../../controller/routes/routes_name.dart';
 import '../../model/user_model.dart';
 import 'profile_avatar.dart';
 import 'responsive.dart';
@@ -79,7 +80,10 @@ class CreatePostContainer extends StatelessWidget {
                   ),
                   const VerticalDivider(width: 8.0),
                   TextButton.icon(
-                    onPressed: () => print('Game'),
+                    onPressed: () {
+                      developer.log("Game Screen");
+                      Navigator.pushNamed(context, RoutesName.gameScreen);
+                    },
                     icon: const Icon(
                       Icons.video_call,
                       color: Colors.purpleAccent,
