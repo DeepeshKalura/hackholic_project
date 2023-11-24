@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../firebase/adding_user_firebase_controller.dart';
+import '../firebase/user_firebase_controller.dart';
 import '../firebase/auth_firebase_controller.dart';
 
 class RegisterScreenController extends ChangeNotifier {
