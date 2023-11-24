@@ -78,6 +78,7 @@ class _CreatePostContainerState extends State<CreatePostContainer> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Post Uploaded Successfully'),
+                          duration: Duration(seconds: 2),
                         ),
                       );
 

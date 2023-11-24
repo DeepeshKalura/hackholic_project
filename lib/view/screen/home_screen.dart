@@ -90,12 +90,18 @@ class _HomeScreenMobile extends StatelessWidget {
             CircleButton(
               icon: Icons.search,
               iconSize: 30.0,
-              onPressed: () => developer.log('Search'),
+              onPressed: () {
+                //
+                developer.log('Search');
+              },
             ),
             CircleButton(
               icon: MdiIcons.facebookMessenger,
               iconSize: 30.0,
-              onPressed: () => developer.log('Messenger'),
+              onPressed: () {
+                //
+                developer.log('Messenger');
+              },
             ),
           ],
           systemOverlayStyle: SystemUiOverlayStyle.dark,
