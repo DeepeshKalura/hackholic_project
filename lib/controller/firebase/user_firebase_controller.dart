@@ -23,7 +23,7 @@ class AddingUserFirebaseController {
         imageUrl: _randomUrlImageController.random(),
       );
 
-      await _firebaseFirestore.collection('users').add(
+      await _firebaseFirestore.collection('users').doc(uid).set(
             user.toMap(),
           );
     } on FirebaseException catch (e) {
@@ -31,11 +31,14 @@ class AddingUserFirebaseController {
     }
   }
 
-  Future<void> getUser(String uid) async {
+  Future<UserModel?> getUser(String uid) async {
     try {
-      await _firebaseFirestore.collection('users').doc(uid).get();
+      var res = await _firebaseFirestore.collection('users').doc(uid).get();
+      UserModel user = UserModel.fromMap(res.data() as Map<String, dynamic>);
+      return user;
     } on FirebaseException catch (e) {
       developer.log(e.message.toString());
+      return null;
     }
   }
 }

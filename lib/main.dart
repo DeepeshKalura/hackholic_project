@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'controller/app/dummy_controller.dart';
+import 'controller/app/home_controller.dart';
 import 'controller/app/login_screen_controller.dart';
 import 'controller/app/register_screen_controller.dart';
 import 'controller/routes/routes.dart';
@@ -33,13 +33,15 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<DummyController>(
-          create: (_) => DummyController(),
-        ),
         ChangeNotifierProvider<LoginScreenController>(
           create: (_) => LoginScreenController(),
         ),
-        ChangeNotifierProvider(create: (_) => RegisterScreenController()),
+        ChangeNotifierProvider(
+          create: (_) => RegisterScreenController(),
+        ),
+        ChangeNotifierProvider<HomeController>(
+          create: (_) => HomeController(),
+        )
       ],
       child: MaterialApp(
         title: 'HackaHolic Project',
@@ -66,7 +68,9 @@ class _MyAppState extends State<MyApp> {
                 );
               case ConnectionState.active:
                 if (snapshot.hasData) {
-                  return const HomeScreen();
+                  return HomeScreen(
+                    uid: snapshot.data?.uid,
+                  );
                 } else {
                   return const LoginScreen();
                 }

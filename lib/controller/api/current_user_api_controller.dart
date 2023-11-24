@@ -1,16 +1,12 @@
-import 'package:flutter/material.dart';
-
 import '../../model/user_model.dart';
 import '../firebase/user_firebase_controller.dart';
 
-class CurrentUserAPIController extends ChangeNotifier {
-  UserModel? currentUser;
-
+class CurrentUserAPIController {
   final AddingUserFirebaseController _addingUserFirebaseController =
       AddingUserFirebaseController();
 
-  void setCurrentUser(String uuid) async {
-    currentUser = await _addingUserFirebaseController.getUser(uuid);
-    notifyListeners();
+  Future<UserModel?> setCurrentUser(String? uid) async {
+    return await _addingUserFirebaseController
+        .getUser(uid ?? 'GnLyXJsPCSRQgtkvonA6dgU3Bra2');
   }
 }

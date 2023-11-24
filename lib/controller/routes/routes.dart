@@ -8,8 +8,11 @@ class Routes {
   static Route<dynamic> onGenerating(RouteSettings settings) {
     switch (settings.name) {
       case 'homeScreen':
+        final Map arguments = settings.arguments as Map;
         return MaterialPageRoute(
-          builder: (_) => const HomeScreen(),
+          builder: (_) => HomeScreen(
+            uid: arguments['uid'],
+          ),
         );
       case 'loginScreen':
         return MaterialPageRoute(

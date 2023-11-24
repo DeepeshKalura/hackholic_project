@@ -1,9 +1,13 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 
 import '../../controller/api/data.dart';
+import '../../controller/app/home_controller.dart';
 import '../../model/models.dart';
 import '../theme/app_theme.dart';
 import '../widget/circle.dart';
@@ -16,13 +20,14 @@ import '../widget/rooms.dart';
 import '../widget/stores.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final String? uid;
+  const HomeScreen({super.key, required this.uid});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   final TrackingScrollController _trackingScrollController =
       TrackingScrollController();
 
@@ -34,14 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final homeProvider = Provider.of<HomeController>(context);
+    homeProvider.setCurrentUser(widget.uid);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         body: Responsive(
-          mobile:
-              _HomeScreenMobile(scrollController: _trackingScrollController),
-          desktop:
-              _HomeScreenDesktop(scrollController: _trackingScrollController),
+          mobile: _HomeScreenMobile(
+              scrollController: _trackingScrollController,
+              currentUser: homeProvider.currentUser),
+          desktop: _HomeScreenDesktop(
+              scrollController: _trackingScrollController,
+              currentUser: homeProvider.currentUser),
         ),
       ),
     );
@@ -50,10 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
 class _HomeScreenMobile extends StatelessWidget {
   final TrackingScrollController scrollController;
+  final UserModel currentUser;
 
   const _HomeScreenMobile({
     Key? key,
     required this.scrollController,
+    required this.currentUser,
   }) : super(key: key);
 
   @override
@@ -78,12 +90,12 @@ class _HomeScreenMobile extends StatelessWidget {
             CircleButton(
               icon: Icons.search,
               iconSize: 30.0,
-              onPressed: () => print('Search'),
+              onPressed: () => developer.log('Search'),
             ),
             CircleButton(
               icon: MdiIcons.facebookMessenger,
               iconSize: 30.0,
-              onPressed: () => print('Messenger'),
+              onPressed: () => developer.log('Messenger'),
             ),
           ],
           systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -122,10 +134,12 @@ class _HomeScreenMobile extends StatelessWidget {
 
 class _HomeScreenDesktop extends StatelessWidget {
   final TrackingScrollController scrollController;
+  final UserModel currentUser;
 
   const _HomeScreenDesktop({
     Key? key,
     required this.scrollController,
+    required this.currentUser,
   }) : super(key: key);
 
   @override
