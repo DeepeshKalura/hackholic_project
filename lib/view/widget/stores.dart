@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../controller/routes/routes_name.dart';
 import '../../model/models.dart';
 import '../theme/app_theme.dart';
 import 'profile_avatar.dart';
@@ -42,7 +43,15 @@ class Stories extends StatelessWidget {
           final StoryModel story = stories[index - 1];
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: _StoryCard(story: story, currentUser: currentUser),
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(RoutesName.storyScreen);
+              },
+              child: _StoryCard(
+                story: story,
+                currentUser: currentUser,
+              ),
+            ),
           );
         },
       ),

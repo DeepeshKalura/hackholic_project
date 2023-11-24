@@ -24,134 +24,149 @@ class CreatePostContainer extends StatefulWidget {
 
 class _CreatePostContainerState extends State<CreatePostContainer> {
   final TextEditingController _textEditingController = TextEditingController();
+  var loading = false;
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = Responsive.isDesktop(context);
 
     final homeProvider = Provider.of<HomeController>(context);
 
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: isDesktop ? 5.0 : 0.0),
-      elevation: isDesktop ? 1.0 : 0.0,
-      shape: isDesktop
-          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))
-          : null,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
-        color: Colors.white,
-        child: Column(
-          children: [
-            Row(
-              children: [
-                ProfileAvatar(imageUrl: widget.currentUser.imageUrl),
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: TextField(
-                    controller: _textEditingController,
-                    decoration: const InputDecoration.collapsed(
-                      hintText: 'What\'s on your mind?',
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-                CircleButton(
-                  onPressed: () async {
-                    // upload post and give
-                    if (_textEditingController.text.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please Enter Some Text'),
-                        ),
-                      );
-                    } else {
-                      await homeProvider.uploadPost(
-                        'posts/images/${homeProvider.currentUser.uid}/${DateTime.now().microsecondsSinceEpoch}.png',
-                        '${DateTime.now().microsecondsSinceEpoch}.png',
-                        homeProvider.data!,
-                        _textEditingController.text,
-                      );
-
-                      // toast for success
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Post Uploaded Successfully'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
-
-                      homeProvider.data = null;
-
-                      _textEditingController.clear();
-                    }
-                  },
-                  icon: Icons.send,
-                  iconSize: 26,
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
-              ],
+    return loading
+        ? const SizedBox(
+            height: 60,
+            child: Center(
+              child: CircularProgressIndicator(),
             ),
-            const Divider(height: 10.0, thickness: 0.5),
-            if (homeProvider.data != null)
-              Center(
-                child: SizedBox(
-                  child: Image.memory(
-                    homeProvider.data!,
-                  ),
-                ),
-              ),
-            SizedBox(
-              height: 40.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          )
+        : Card(
+            margin: EdgeInsets.symmetric(horizontal: isDesktop ? 5.0 : 0.0),
+            elevation: isDesktop ? 1.0 : 0.0,
+            shape: isDesktop
+                ? RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0))
+                : null,
+            child: Container(
+              padding: const EdgeInsets.fromLTRB(12.0, 8.0, 12.0, 0.0),
+              color: Colors.white,
+              child: Column(
                 children: [
-                  TextButton.icon(
-                    onPressed: () {
-                      // TODO: Take a Camera Photo From Here and
+                  Row(
+                    children: [
+                      ProfileAvatar(imageUrl: widget.currentUser.imageUrl),
+                      const SizedBox(width: 8.0),
+                      Expanded(
+                        child: TextField(
+                          controller: _textEditingController,
+                          decoration: const InputDecoration.collapsed(
+                            hintText: 'What\'s on your mind?',
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                      CircleButton(
+                        onPressed: () async {
+                          setState(() {
+                            loading = true;
+                          });
 
-                      homeProvider.getImageFromUser(true);
-                      developer.log("camera");
-                    },
-                    icon: const Icon(
-                      Icons.video_camera_back,
-                      color: Colors.red,
-                    ),
-                    label: const Text('Camera'),
+                          // upload post and give
+                          if (_textEditingController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Please Enter Some Text'),
+                              ),
+                            );
+                          } else {
+                            await homeProvider.uploadPost(
+                              'posts/images/${homeProvider.currentUser.uid}/${DateTime.now().microsecondsSinceEpoch}.png',
+                              '${DateTime.now().microsecondsSinceEpoch}.png',
+                              homeProvider.data!,
+                              _textEditingController.text,
+                            );
+
+                            setState(() {
+                              loading = false;
+                            });
+
+                            // toast for success
+                            homeProvider.data = null;
+
+                            _textEditingController.clear();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Post Uploaded Successfully'),
+                                duration: Duration(seconds: 3),
+                              ),
+                            );
+                          }
+                        },
+                        icon: Icons.send,
+                        iconSize: 26,
+                      ),
+                      const SizedBox(
+                        width: 10.0,
+                      ),
+                    ],
                   ),
-                  const VerticalDivider(width: 8.0),
-                  TextButton.icon(
-                    onPressed: () {
-                      homeProvider.getImageFromUser(false);
-                      developer.log('Photo');
-                    },
-                    icon: const Icon(
-                      Icons.photo_library,
-                      color: Colors.green,
+                  const Divider(height: 10.0, thickness: 0.5),
+                  if (homeProvider.data != null)
+                    Center(
+                      child: SizedBox(
+                        child: Image.memory(
+                          homeProvider.data!,
+                        ),
+                      ),
                     ),
-                    label: const Text('Photo'),
-                  ),
-                  const VerticalDivider(width: 8.0),
-                  TextButton.icon(
-                    onPressed: () {
-                      developer.log("Game Screen");
-                      Navigator.pushNamed(context, RoutesName.gameScreen);
-                    },
-                    icon: const Icon(
-                      Icons.video_call,
-                      color: Colors.purpleAccent,
+                  SizedBox(
+                    height: 40.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        TextButton.icon(
+                          onPressed: () {
+                            // TODO: Take a Camera Photo From Here and
+
+                            homeProvider.getImageFromUser(true);
+                            developer.log("camera");
+                          },
+                          icon: const Icon(
+                            Icons.video_camera_back,
+                            color: Colors.red,
+                          ),
+                          label: const Text('Camera'),
+                        ),
+                        const VerticalDivider(width: 8.0),
+                        TextButton.icon(
+                          onPressed: () {
+                            homeProvider.getImageFromUser(false);
+                            developer.log('Photo');
+                          },
+                          icon: const Icon(
+                            Icons.photo_library,
+                            color: Colors.green,
+                          ),
+                          label: const Text('Photo'),
+                        ),
+                        const VerticalDivider(width: 8.0),
+                        TextButton.icon(
+                          onPressed: () {
+                            developer.log("Game Screen");
+                            Navigator.pushNamed(context, RoutesName.gameScreen);
+                          },
+                          icon: const Icon(
+                            Icons.video_call,
+                            color: Colors.purpleAccent,
+                          ),
+                          label: const Text('Game'),
+                        ),
+                      ],
                     ),
-                    label: const Text('Game'),
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }

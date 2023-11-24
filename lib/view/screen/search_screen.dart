@@ -116,7 +116,7 @@ class _UserContainerState extends State<UserContainer> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Friend Request Sent'),
-                  duration: Duration(seconds: 3),
+                  duration: Duration(seconds: 4),
                 ),
               );
 

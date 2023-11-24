@@ -5,6 +5,7 @@ import '../../view/screen/home_screen.dart';
 import '../../view/screen/login_screen.dart';
 import '../../view/screen/register_screen.dart';
 import '../../view/screen/search_screen.dart';
+import '../../view/screen/story_screen.dart';
 
 class Routes {
   static Route<dynamic> onGenerating(RouteSettings settings) {
@@ -35,6 +36,12 @@ class Routes {
             users: arguments['users'],
             scrollController: arguments['scrollController'],
           ),
+        );
+      case 'storyScreen':
+        // final Map arguments = settings.arguments as Map;
+
+        return MaterialPageRoute(
+          builder: (_) => const StoryScreen(),
         );
       default:
         return MaterialPageRoute(

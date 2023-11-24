@@ -4,4 +4,5 @@ class RoutesName {
   static const String registerScreen = 'registerScreen';
   static const String gameScreen = 'gameScreen';
   static const String searchScreen = 'searchScreen';
+  static const String storyScreen = 'storyScreen';
 }

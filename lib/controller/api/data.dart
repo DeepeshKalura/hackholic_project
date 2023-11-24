@@ -38,13 +38,6 @@ final List<StoryModel> stories = [
       storyId: '1',
       storyTitle: "My Story"),
   StoryModel(
-      user: onlineUsers[2],
-      imageUrl:
-          'https://images.unsplash.com/photo-1499363536502-87642509e31b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
-      isViewed: true,
-      storyId: '2',
-      storyTitle: "My Story two"),
-  StoryModel(
       user: onlineUsers[0],
       imageUrl:
           'https://images.unsplash.com/photo-1497262693247-aa258f96c4f5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=624&q=80',
@@ -57,7 +50,14 @@ final List<StoryModel> stories = [
           'https://images.unsplash.com/photo-1496950866446-3253e1470e8e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80',
       isViewed: true,
       storyId: '4',
-      storyTitle: "My Story four")
+      storyTitle: "My Story four"),
+  StoryModel(
+      user: onlineUsers[2],
+      imageUrl:
+          'https://images.unsplash.com/photo-1499363536502-87642509e31b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80',
+      isViewed: true,
+      storyId: '2',
+      storyTitle: "My Story two"),
 ];
 
 final List<PostModel> posts = [
