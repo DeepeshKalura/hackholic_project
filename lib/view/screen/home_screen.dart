@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../../controller/api/data.dart';
 import '../../controller/app/home_controller.dart';
+import '../../controller/routes/routes_name.dart';
 import '../../model/models.dart';
 import '../theme/app_theme.dart';
 import '../widget/circle.dart';
@@ -45,11 +46,13 @@ class HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         body: Responsive(
           mobile: _HomeScreenMobile(
-              scrollController: _trackingScrollController,
-              currentUser: homeProvider.currentUser),
+            scrollController: _trackingScrollController,
+            currentUser: homeProvider.currentUser,
+          ),
           desktop: _HomeScreenDesktop(
-              scrollController: _trackingScrollController,
-              currentUser: homeProvider.currentUser),
+            scrollController: _trackingScrollController,
+            currentUser: homeProvider.currentUser,
+          ),
         ),
       ),
     );
@@ -68,20 +71,57 @@ class _HomeScreenMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // developer.log("homeProvider");
+    final homeProvider = Provider.of<HomeController>(context, listen: false);
+
+    Widget searching() {
+      if (homeProvider.isSearching) {
+        return SizedBox(
+          height: 50,
+          child: TextField(
+            decoration: InputDecoration(
+              hintText: 'Search',
+              prefixIcon: const Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            onSubmitted: (value) {
+              developer.log("onSubmitted");
+              developer.log(value);
+
+              homeProvider.searchUser(value);
+
+              value = "";
+
+              developer.log(homeProvider.searchResult.toString());
+
+              Navigator.pushNamed(context, RoutesName.searchScreen, arguments: {
+                'users': homeProvider.searchResult,
+                'scrollController': scrollController,
+              });
+            },
+          ),
+        );
+      } else {
+        return const Text(
+          'facebook',
+          style: TextStyle(
+            color: Palette.facebookBlue,
+            fontSize: 28.0,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -1.2,
+          ),
+        );
+      }
+    }
+
     return CustomScrollView(
       controller: scrollController,
       slivers: [
         SliverAppBar(
           backgroundColor: Colors.white,
-          title: const Text(
-            'facebook',
-            style: TextStyle(
-              color: Palette.facebookBlue,
-              fontSize: 28.0,
-              fontWeight: FontWeight.bold,
-              letterSpacing: -1.2,
-            ),
-          ),
+          title: searching(),
           centerTitle: false,
           floating: true,
           actions: [
@@ -93,6 +133,7 @@ class _HomeScreenMobile extends StatelessWidget {
                 onPressed: () {
                   //
                   developer.log('Search');
+                  homeProvider.clickOnSearch();
                 },
               ),
             ),

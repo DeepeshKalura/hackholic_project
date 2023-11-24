@@ -7,6 +7,7 @@ import '../../model/models.dart';
 import '../api/current_user_api_controller.dart';
 import '../api/random_url_image_controller.dart';
 import '../firebase/post_firebase_controller.dart';
+import '../firebase/search_user_firebase_controller.dart';
 import '../firebase/upload_firebase_controller.dart';
 import '../local/upload_data_from_device_local_controller.dart';
 
@@ -17,8 +18,13 @@ class HomeController extends ChangeNotifier {
       UploadDataFromDeviceLocalController();
 
   final _randomUrlImageController = RandomUrlImageController();
+  final _searchUserFirebaseController = SearchUserFirebaseController();
 
   Uint8List? data;
+
+  var isSearching = false;
+
+  List<UserModel> searchResult = [];
 
   final Uuid _uuid = const Uuid();
   UserModel currentUser = UserModel(
@@ -70,5 +76,15 @@ class HomeController extends ChangeNotifier {
 
   String randomPost() {
     return _randomUrlImageController.randomPost();
+  }
+
+  void clickOnSearch() {
+    isSearching = !isSearching;
+    notifyListeners();
+  }
+
+  void searchUser(String query) async {
+    searchResult = await _searchUserFirebaseController.searchUser(query);
+    notifyListeners();
   }
 }
