@@ -35,13 +35,29 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-class UserContainer extends StatelessWidget {
+class UserContainer extends StatefulWidget {
   const UserContainer({super.key, required this.user});
   final UserModel user;
 
   @override
+  State<UserContainer> createState() => _UserContainerState();
+}
+
+class _UserContainerState extends State<UserContainer> {
+  var isFriendRequestSent = false;
+  String text = 'Add Friend';
+
+  void textString() {
+    if (isFriendRequestSent) {
+      text = 'Friend Request Sent';
+    } else {
+      text = "Add Friend";
+    }
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var isFriendRequestSent = false;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
@@ -62,7 +78,7 @@ class UserContainer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Image.network(
-                  user.imageUrl,
+                  widget.user.imageUrl,
                 ),
               ),
               const SizedBox(width: 20.0),
@@ -71,14 +87,18 @@ class UserContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    user.name,
+                    widget.user.name,
                     style: const TextStyle(
-                        fontSize: 16.0, fontWeight: FontWeight.bold),
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    user.email,
-                    style: const TextStyle(color: Colors.grey),
+                    widget.user.email,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                    ),
                   ),
                 ],
               ),
@@ -92,8 +112,17 @@ class UserContainer extends StatelessWidget {
             ),
             onPressed: () {
               // sendFriendRequest();
+              isFriendRequestSent = true;
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Friend Request Sent'),
+                  duration: Duration(seconds: 3),
+                ),
+              );
+
+              textString();
             },
-            child: const Text('Add Friend'),
+            child: Text(text),
           ),
         ],
       ),
