@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project/view/theme/app_theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../controller/app/register_screen_controller.dart';
+import '/view/theme/app_theme.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -36,6 +39,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final registerProvider = Provider.of<RegisterScreenController>(context);
     return Scaffold(
       backgroundColor: Palette.scaffold,
       body: Center(
@@ -150,14 +154,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       labelText: "Confirm Password",
                       prefixIcon: const Icon(Icons.password_outlined),
                       suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _obscurePassword = !_obscurePassword;
-                            });
-                          },
-                          icon: _obscurePassword
-                              ? const Icon(Icons.visibility_outlined)
-                              : const Icon(Icons.visibility_off_outlined)),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                        icon: _obscurePassword
+                            ? const Icon(Icons.visibility_outlined)
+                            : const Icon(
+                                Icons.visibility_off_outlined,
+                              ),
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -186,21 +193,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         onPressed: () {
                           if (_formKey.currentState?.validate() ?? false) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                width: 200,
-                                backgroundColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                behavior: SnackBarBehavior.floating,
-                                content: const Text("Registered Successfully"),
-                              ),
+                            registerProvider.signUp(
+                              _controllerEmail.text,
+                              _controllerPassword.text,
+                              _controllerUsername.text,
                             );
 
                             _formKey.currentState?.reset();
-
                             Navigator.pop(context);
                           }
                         },
