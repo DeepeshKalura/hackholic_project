@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AuthFirebaseController {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+class EmailAuthFirebaseController {
+  final _auth = FirebaseAuth.instance;
+
   Future<String> signUp(
     String email,
     String password,

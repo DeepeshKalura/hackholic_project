@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../firebase/auth_firebase_controller.dart';
+import '../firebase/auth/auth_firebase_controller.dart';
 
 class LoginScreenController extends ChangeNotifier {
-  final AuthFirebaseController _authFirebaseController =
-      AuthFirebaseController();
+  final _authFirebaseController = EmailAuthFirebaseController();
 
   Future<String> signIn(String email, String password) async {
     return await _authFirebaseController.signIn(email, password);
