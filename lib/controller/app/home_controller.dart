@@ -87,4 +87,12 @@ class HomeController extends ChangeNotifier {
     searchResult = await _searchUserFirebaseController.searchUser(query);
     notifyListeners();
   }
+
+  List<PostModel> postModel = [];
+
+  Future<void> getAllPost() async {
+    var res = await _postFirebaseController.getPosts();
+    postModel = res;
+    notifyListeners();
+  }
 }

@@ -74,6 +74,8 @@ class _HomeScreenMobile extends StatelessWidget {
     // developer.log("homeProvider");
     final homeProvider = Provider.of<HomeController>(context, listen: false);
 
+    homeProvider.getAllPost();
+
     Widget searching() {
       if (homeProvider.isSearching) {
         return SizedBox(
@@ -166,6 +168,46 @@ class _HomeScreenMobile extends StatelessWidget {
             ),
           ),
         ),
+
+        SliverToBoxAdapter(
+          child: PostContainer(
+            post: PostModel(
+              caption: 'it\'s Naman',
+              comments: 1,
+              imageUrl:
+                  'https://firebasestorage.googleapis.com/v0/b/hackaholic-a793a.appspot.com/o/posts%2Fimages%2FnfHcqx57NAerBbMvLQeF3uZ1MYn2%2F1700860365829284.png%2F1700860365829304.png?alt=media&token=7851b567-c329-4b58-af83-1ee3eb2944be',
+              likes: 12,
+              postId: '462b8d5a-f1be-4fd3-a697-350cb6dcde1f',
+              shares: 6,
+              timeAgo: "10 min",
+              user: currentUser,
+            ),
+          ),
+        ),
+
+        SliverToBoxAdapter(
+          child: PostContainer(
+            post: PostModel(
+              caption: 'the boys',
+              comments: 1,
+              imageUrl:
+                  'https://firebasestorage.googleapis.com/v0/b/hackaholic-a793a.appspot.com/o/posts%2Fimages%2FGDUEXlI6FoOfKwmvA3Q9kgU0eaB2%2F1700851870188079.png%2F1700851870188108.png?alt=media&token=c746fb63-6709-4a61-839d-5b5e2a1d9037',
+              likes: 36,
+              postId: 'a9c67234-0dcf-48ae-95ef-e28dbc602775',
+              shares: 7,
+              timeAgo: "30 min",
+              user: currentUser,
+            ),
+          ),
+        ),
+        if (homeProvider.postModel.isNotEmpty)
+          SliverList(
+              delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              return PostContainer(post: homeProvider.postModel[index]);
+            },
+            childCount: posts.length,
+          )),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (context, index) {

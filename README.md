@@ -1,10 +1,1 @@
-# Winning the hackathon is my goal 
-
-Problem Statement 
-1 Social Networking site - a website similar to Facebook where you can search people, add friends, upload photos/videos and post something on the wall.
-
-Todo :
-1. Search People 
-2. Add Friends
-3. Upload Photos/Videos
-4. Post something
+Complete this project as satisfactorily as possible. The more you complete this project, the more you will get out of it, and the better your final grade will be. If you do not complete the project, you will fail the course.
