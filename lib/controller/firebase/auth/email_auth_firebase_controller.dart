@@ -1,14 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class EmailAuthFirebaseController {
-  final _auth = FirebaseAuth.instance;
+  final FirebaseAuth auth;
+
+  EmailAuthFirebaseController({required this.auth});
 
   Future<String> signUp(
     String email,
     String password,
   ) async {
     try {
-      var result = await _auth.createUserWithEmailAndPassword(
+      var result = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -21,7 +23,7 @@ class EmailAuthFirebaseController {
 
   Future<String> signIn(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -32,6 +34,6 @@ class EmailAuthFirebaseController {
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    await auth.signOut();
   }
 }
